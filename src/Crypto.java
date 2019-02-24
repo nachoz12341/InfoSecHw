@@ -36,14 +36,13 @@ public class Crypto
         {
             e.printStackTrace();
         }
-
     }
 
     public byte[] encrypt(byte[] message) throws Exception
     {
         if(encryptionType.equals("AES"))
             cipher.init(Cipher.ENCRYPT_MODE,skeySpec,ivspec);
-        else
+            else
             if(encryptionType.equals("RSA"))
                 cipher.init(Cipher.ENCRYPT_MODE,pubKey);
 
@@ -63,12 +62,12 @@ public class Crypto
 
     private void setEncryption(String encryptionType) throws Exception
     {
-        if(encryptionType.equals("AES"))
-        {
-            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            skeySpec = new SecretKeySpec(aesKey.getBytes("UTF-8"), "AES");
-        }
-        else
+            if(encryptionType.equals("AES"))
+            {
+                cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+                skeySpec = new SecretKeySpec(aesKey.getBytes("UTF-8"), "AES");
+            }
+            else
             if(encryptionType.equals("RSA"))
             {
                 cipher = Cipher.getInstance("RSA");
