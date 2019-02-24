@@ -4,7 +4,7 @@ class main {
 
     public static void main(String args[])
     {
-        Crypto crypto = new Crypto("AES", "1011010110010010");
+        Crypto crypto = new Crypto("RSA");
         String message = "Hello world!";
         byte[] cipherText = null;
         byte[] finalText = null;
@@ -16,7 +16,16 @@ class main {
         try
         {
             crypto.init();
-            cipherText = crypto.encrypt(message.getBytes("UTF-8"));
+
+            long time = System.nanoTime();
+
+            for(int i=0;i<100;i++)
+                cipherText = crypto.encrypt(message.getBytes("UTF-8"));
+
+            long finalTime = System.nanoTime()-time;
+            System.out.println("Encryption time total(ns): "+ finalTime);
+            System.out.println("Encryption time average(ns): "+ finalTime/100);
+
             finalText = crypto.decrypt(cipherText);
         }
         catch(Exception e)
@@ -26,6 +35,7 @@ class main {
 
         String encrMessage = new String(cipherText);
         String dncrMessage = new String(finalText);
+
         System.out.println("Encrypted message");
         System.out.println(encrMessage);
         System.out.println("Decrypted message");
