@@ -1,10 +1,7 @@
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
 
 
 public class Crypto
@@ -58,6 +55,17 @@ public class Crypto
                 cipher.init(Cipher.DECRYPT_MODE,privateKey);
 
         return cipher.doFinal(cipherText);
+    }
+
+    public byte[] sign(byte[] message) throws Exception
+    {
+        if(!encryptionType.equals("RSA"))   return null;
+
+        Signature privateSignature = Signature.getInstance("SHA256withRSA");
+        privateSignature.initSign(privateKey);
+        privateSignature.update(message);
+
+        return privateSignature.sign();
     }
 
     private void setEncryption(String encryptionType) throws Exception
